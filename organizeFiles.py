@@ -32,6 +32,18 @@ def organize_files_by_date(base_folder):
         print("Invalid folder path.")
         return
 
+    # Check if there are any files in the folder
+    files_found = False
+    for root, _, files in os.walk(base_folder):
+        if files:  # If there are files in the directory, continue processing
+            files_found = True
+            break
+    
+    if not files_found:
+        print("No files found in the folder.")
+        return
+
+    # Iterate and organize files
     for root, _, files in os.walk(base_folder):
         for file in files:
             file_path = os.path.join(root, file)
@@ -54,4 +66,10 @@ def organize_files_by_date(base_folder):
 
 if __name__ == "__main__":
     folder_path = input("Enter the folder path: ").strip()
-    organize_files_by_date(folder_path)
+
+    # Confirm the folder path
+    confirm = input(f"Are you sure you want to organize files in {folder_path}? (y/n): ").strip().lower()
+    if confirm == 'y':
+        organize_files_by_date(folder_path)
+    else:
+        print("Operation cancelled.")
